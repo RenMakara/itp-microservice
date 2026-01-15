@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Itp-identity-service" options="-parameters" />
+      <module name="Itp-identity-service.main" options="-parameters" />
+      <module name="Itp-identity-service.test" options="-parameters" />
+      <module name="account-service" options="-parameters" />
+      <module name="account-service.main" options="-parameters" />
+      <module name="account-service.test" options="-parameters" />
+      <module name="customer-service" options="-parameters" />
+      <module name="customer-service.main" options="-parameters" />
+      <module name="customer-service.test" options="-parameters" />
+      <module name="eurekaserver" options="-parameters" />
+      <module name="eurekaserver.main" options="-parameters" />
+      <module name="eurekaserver.test" options="-parameters" />
+      <module name="gateway-server" options="-parameters" />
+      <module name="gateway-server.main" options="-parameters" />
+      <module name="gateway-server.test" options="-parameters" />
+      <module name="itp-configserver" options="-parameters" />
+      <module name="itp-configserver.main" options="-parameters" />
+      <module name="itp-configserver.test" options="-parameters" />
+    </option>
+  </component>
+</project>
