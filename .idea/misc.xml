@@ -6,6 +6,7 @@
     <file type="web" url="file://$PROJECT_DIR$/customer-service" />
     <file type="web" url="file://$PROJECT_DIR$/eurekaserver" />
     <file type="web" url="file://$PROJECT_DIR$/itp-configserver" />
+    <file type="web" url="file://$PROJECT_DIR$/Itp-identity-service" />
   </component>
   <component name="MaterialThemeProjectNewConfig">
     <option name="metadata">
