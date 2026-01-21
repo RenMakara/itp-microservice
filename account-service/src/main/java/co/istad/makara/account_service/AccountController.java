@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     @GetMapping
     public String unsecureEndpoint(){
-        return "Account - unsecure endpoint";
+        return "Account - secure endpoint";
     }
 }

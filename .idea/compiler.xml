@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Gradle Imported" enabled="true">
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="iam-service.main" />
-      </profile>
-    </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Itp-identity-service" target="21" />
       <module name="Itp-identity-service.main" target="21" />
@@ -24,12 +15,18 @@
       <module name="account-service" options="-parameters" />
       <module name="account-service.main" options="-parameters" />
       <module name="account-service.test" options="-parameters" />
+      <module name="admin-bff" options="-parameters" />
+      <module name="admin-bff.main" options="-parameters" />
+      <module name="admin-bff.test" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="customer-service.main" options="-parameters" />
       <module name="customer-service.test" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
       <module name="eurekaserver.main" options="-parameters" />
       <module name="eurekaserver.test" options="-parameters" />
+      <module name="front-bff" options="-parameters" />
+      <module name="front-bff.main" options="-parameters" />
+      <module name="front-bff.test" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
       <module name="gateway-server.main" options="-parameters" />
       <module name="gateway-server.test" options="-parameters" />
