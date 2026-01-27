@@ -17,11 +17,12 @@ public class SecurityConfig {
 
 
         http.authorizeExchange(exchanges -> exchanges
-                .anyExchange().permitAll()
+                .pathMatchers("/").permitAll()
+                .anyExchange().authenticated()
         );
         http.csrf(ServerHttpSecurity.CsrfSpec::disable);
         http.formLogin(ServerHttpSecurity.FormLoginSpec::disable);
-        http.logout(ServerHttpSecurity.LogoutSpec::disable);
+//        http.logout(ServerHttpSecurity.LogoutSpec::disable);
         http.httpBasic(ServerHttpSecurity.HttpBasicSpec::disable);
 
         http.oauth2Login(Customizer.withDefaults());

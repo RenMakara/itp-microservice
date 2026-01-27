@@ -1,5 +1,6 @@
 package co.istad.makara.account_service;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,17 +14,18 @@ public class AccountServiceApplication {
 		SpringApplication.run(AccountServiceApplication.class, args);
 	}
 
-    @Bean
-    CommandLineRunner run(
-            @Value("${service.name}") String name,
-            @Value("${secret.weak-password}") String weakPassword,
-            @Value("${secret.strong-password}") String strongPassword
-    ){
-        return args -> {
-            System.out.println("Name : " +  name);
-            System.out.println("Weak password : "  +  weakPassword);
-            System.out.println("Strong password : "  +  strongPassword);
-        };
-    }
+//
+//    @Bean
+//    CommandLineRunner run(
+//            @Value("${service.name}") String name,
+//            @Value("${secret.weak-password}") String weakPassword,
+//            @Value("${secret.strong-password}") String strongPassword
+//    ){
+//        return args -> {
+//            System.out.println("Name : " +  name);
+//            System.out.println("Weak password : "  +  weakPassword);
+//            System.out.println("Strong password : "  +  strongPassword);
+//        };
+//    }
 
 }

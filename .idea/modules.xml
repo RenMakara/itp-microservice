@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/account-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/account-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/customer-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/customer-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/front-bff.main.iml" filepath="$PROJECT_DIR$/.idea/modules/front-bff.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/iam-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/iam-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/itp-microservice.iml" filepath="$PROJECT_DIR$/.idea/itp-microservice.iml" />
     </modules>

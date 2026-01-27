@@ -22,8 +22,8 @@ public class SecurityConfig {
         );
 
         http.csrf(AbstractHttpConfigurer::disable);
-        http.httpBasic(basic -> basic.disable());
-        http.formLogin(basic -> basic.disable());
+        http.httpBasic(AbstractHttpConfigurer::disable);
+        http.formLogin(AbstractHttpConfigurer::disable);
 
         http.oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(Customizer.withDefaults()));

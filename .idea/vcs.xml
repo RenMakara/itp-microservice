@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Itp-identity-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/itp-admin-dashboard" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/itp-config-repo" vcs="Git" />
   </component>
 </project>
