@@ -29,9 +29,7 @@ public class SecurityConfig {
 
         http.csrf(ServerHttpSecurity.CsrfSpec::disable);
         http.formLogin(ServerHttpSecurity.FormLoginSpec::disable);
-        //http.logout(ServerHttpSecurity.LogoutSpec::disable);
         http.httpBasic(ServerHttpSecurity.HttpBasicSpec::disable);
-
         http.oauth2Login(Customizer.withDefaults());
 
         // customize logout
