@@ -97,7 +97,7 @@ export default function Page() {
     try {
       setLoading(true);
 
-      const response = await fetch("/auth/me", {
+      const response = await fetch("http://localhost:9990/auth/me", {
         credentials: "include",
         headers: { Accept: "application/json" },
       });
