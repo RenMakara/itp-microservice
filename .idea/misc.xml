@@ -9,6 +9,7 @@
     <file type="web" url="file://$PROJECT_DIR$/gateway-server" />
     <file type="web" url="file://$PROJECT_DIR$/itp-configserver" />
     <file type="web" url="file://$PROJECT_DIR$/Itp-identity-service" />
+    <file type="web" url="file://$PROJECT_DIR$/pipeline-service" />
   </component>
   <component name="MaterialThemeProjectNewConfig">
     <option name="metadata">
