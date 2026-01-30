@@ -7,14 +7,58 @@ spring:
     active: dev
   config:
     import: optional:configserver:http://localhost:8888
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: qwer
+
   cloud:
     gateway:
       server:
         webflux:
           discovery:
             locator:
-              enabled: true
+              enabled: false
               lower-case-service-id: true
+          routes:
+            - id: pipeline
+              uri: lb://pipeline
+              predicates:
+                - Path=/pipeline-service/**
+              filters:
+                - RewritePath=/pipeline-service/(?<segment>.*), /$\{segment}
+                - name: CircuitBreaker
+                  args:
+                    name: pipelineCircuitBreaker
+                    fallbackUri: forward:/fallback/pipeline-service/client/account/secured
+#                    statusCodes:
+#                      - 500
+#                      - 404
+
+            - id: account
+              uri: lb://account
+              predicates:
+                - Path=/account/**
+              filters:
+                - RewritePath=/account/(?<segment>.*),/$\{segment}
+                - name: CircuitBreaker
+                  args:
+                    name: accountCircuitBreaker
+                    fallbackUri: forward:/fallback/account
+            - id: customer
+              uri: lb://customer
+              predicates:
+                - Path=/customer/**
+              filters:
+                - RewritePath=/customer/(?<segment>.*),/$\{segment}
+                - name: CircuitBreaker
+                  args:
+                    name: customerCircuitBreaker
+                    fallbackUri: forward:/fallback/customer
+
+
   #-----------------------------------------------
   # Why do we need this?
   # To get the access token from the oauth2 server
@@ -39,6 +83,22 @@ spring:
               - client_credentials
               - refresh_token
             scope:
-              - openid # Auto issue access token
+              - openid # Auto-issue access token
               - profile # Get profile
               - email # Get email
+# Resilience4j settings
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10 # Number of requests in a sliding window type
+        failure-rate-threshold: 50 #Percentage,  # If 50% of requests fail, circuit breaker opens
+        permitted-number-of-calls-in-half-open-state: 2 # Request number(២ដង) before switching to the open state
+        wait-duration-in-open-state: 10000 # milliseconds, # Duration for waiting in open state
+
+# Actuator settings
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

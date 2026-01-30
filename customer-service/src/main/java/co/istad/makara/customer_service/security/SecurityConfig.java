@@ -16,7 +16,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http){
 
         http.authorizeHttpRequests(requests -> requests
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
         );
 
         http.csrf(token -> token.disable());

@@ -28,6 +28,6 @@ public class HttpInterfaceConfig {
         return factory.createNormalClient("http://localhost:20261", CustomerClient.class);
     }
 
-}
+    }
 
 

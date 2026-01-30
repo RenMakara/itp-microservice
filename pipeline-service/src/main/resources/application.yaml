@@ -7,6 +7,7 @@ spring:
     active: dev
   config:
     import: optional:configserver:http://localhost:8888
+
   security:
     oauth2:
       resourceserver:
@@ -28,4 +29,22 @@ spring:
               - openid # Auto-issue access token
               - profile # Get profile
               - email # Get email
+
+# Resilience4j settings
+resilience4j:
+  circuitbreaker:
+    instances:
+      account:
+        sliding-window-size: 10 # Number of requests in a sliding window type
+        failure-rate-threshold: 50 #Percentage,  # If 50% of requests fail, circuit breaker opens
+        permitted-number-of-calls-in-half-open-state: 2 # Request number(២ដង) before switching to the open state
+        wait-duration-in-open-state: 10000 # milliseconds, # Duration for waiting in open state
+
+# Actuator settings
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 
