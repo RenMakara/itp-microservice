@@ -73,6 +73,53 @@ services:
       - kafka_3_itp_vol:/var/lib/kafka/data
     networks:
       - itp-net
+
+  # Kafka connect with Debezium for Oracle
+  debezium-kafka-connect-itp:
+    image: quay.io/debezium/connect:3.0
+    container_name: debezium-kafka-connect-itp
+    ports:
+      - "8083:8083"
+    environment:
+      BOOTSTRAP_SERVERS: 'kafka-1-itp:9090,kafka-2-itp:9090,kafka-3-itp:9090'
+      GROUP_ID: itp-connect-group
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+      # Points to the Schema Registry we added earlier
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry-itp:8081
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry-itp:8081
+      # Converters
+      KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+    depends_on:
+      - kafka-1-itp
+      - kafka-2-itp
+      - kafka-3-itp
+      - schema-registry-itp
+    networks:
+      - itp-net 
+  
+  # Schema Registry Configuration
+  schema-registry-itp:
+    image: confluentinc/cp-schema-registry:7.8.0
+    container_name: schema-registry-itp
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry-itp
+      SCHEMA_REGISTRY_DEBUG: "true"
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 3
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka-1-itp:9090,kafka-2-itp:9090,kafka-3-itp:9090'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    depends_on:
+      - kafka-1-itp
+      - kafka-2-itp
+      - kafka-3-itp
+    networks:
+      - itp-net
+
   kafka-ui-itp:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui-itp
@@ -89,12 +136,12 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka-1-itp:9090,kafka-2-itp:9090,kafka-3-itp:9090"
 
       # Schema Registry Configuration
-      # KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry-itp:8081
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry-itp:8081
 
 
       # Kafka Connect Configuration
-      #KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: debezium-kafka-connect-itp
-      #KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://debezium-kafka-connect-itp:8083
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: debezium-kafka-connect-itp
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://debezium-kafka-connect-itp:8083
     volumes:
       - kafka-ui-itp-data:/data
     healthcheck:
@@ -107,8 +154,8 @@ services:
       - kafka-1-itp
       - kafka-2-itp
       - kafka-3-itp
-      #- schema-registry-itp
-      #- debezium-kafka-connect-itp
+      - schema-registry-itp
+      - debezium-kafka-connect-itp
     # Resource limits for stability
     deploy:
       resources:
