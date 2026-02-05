@@ -116,7 +116,7 @@ export const Navbar = ({
     },
   ],
   auth = {
-    login: { title: "Login", url: "/oauth2/authorization/nextjs" },
+    login: { title: "Login", url: "/oauth2/authorization/itp-standard" },
   },
   dashboard = {
     title: "Dashboard",
