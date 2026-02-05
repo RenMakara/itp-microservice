@@ -22,6 +22,11 @@ spring:
             locator:
               enabled: false
               lower-case-service-id: true
+          # Global timeout settings
+          httpclient:
+            connect-timeout: 1000
+            response-timeout: 5s
+
           routes:
             - id: pipeline
               uri: lb://pipeline
@@ -29,10 +34,26 @@ spring:
                 - Path=/pipeline-service/**
               filters:
                 - RewritePath=/pipeline-service/(?<segment>.*), /$\{segment}
-                - name: CircuitBreaker
+                - name: RequestRateLimiter
                   args:
-                    name: pipelineCircuitBreaker
-                    fallbackUri: forward:/fallback/pipeline-service/client/account/secured
+                    redis-rate-limiter.replenishRate: 10
+                    redis-rate-limiter.burstCapacity: 20
+                    redis-rate-limiter.requestedTokens: 1
+#                - name: Retry
+#                  args:
+#                    retries: 3
+#                    statuses: GATEWAY_TIMEOUT
+#                    methods: GET
+#                    backoff:
+#                      firstBackoff: 10ms
+#                      maxBackoff: 50ms
+#                      factor: 2
+#                      basedOnPreviousValue: true
+#                    timeout: 5s
+#                - name: CircuitBreaker
+#                  args:
+#                    name: pipelineCircuitBreaker
+#                    fallbackUri: forward:/fallback/pipeline-service/client/account/secured
 #                    statusCodes:
 #                      - 500
 #                      - 404
