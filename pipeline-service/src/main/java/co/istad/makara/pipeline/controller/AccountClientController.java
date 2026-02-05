@@ -9,6 +9,7 @@ import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/client/account")
+@Slf4j
 public class AccountClientController {
 
     private final AccountClient accountClient;
@@ -31,6 +33,8 @@ public class AccountClientController {
     //@CircuitBreaker(name = "account", fallbackMethod = "getSecuredDataFallback")
     @GetMapping("/secured")
     public Map<String, Object> getSecuredData() {
+
+        log.debug("getSecuredData");
         //return accountClient.getSecuredData();
         try {
             return circuitBreaker.executeSupplier(accountClient::getAccounts);
