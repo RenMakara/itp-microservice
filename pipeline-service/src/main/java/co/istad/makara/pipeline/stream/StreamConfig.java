@@ -66,8 +66,8 @@ public class StreamConfig {
                     Map<String, String> data = parseXmlToMap(xmlString);
 
                     // Access the data
-                    log.info("Name: {}", data.get("name"));  // "OG goodlen"
-                    log.info("Role: {}", data.get("role"));  // "Dev"
+                    log.info("Name: {}", data.get("name"));
+                    log.info("Role: {}", data.get("role"));
 
                 } catch (Exception e) {
                     log.error("Error converting record", e);
@@ -78,51 +78,39 @@ public class StreamConfig {
 
     private Map<String, String> parseXmlToMap(String xmlString) {
         Map<String, String> result = new HashMap<>();
-
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
-
             // Get root element
             Element root = doc.getDocumentElement();
-
             // Extract name
             NodeList nameNodes = root.getElementsByTagName("name");
             if (nameNodes.getLength() > 0) {
                 result.put("name", nameNodes.item(0).getTextContent());
             }
-
             // Extract role
             NodeList roleNodes = root.getElementsByTagName("role");
             if (roleNodes.getLength() > 0) {
                 result.put("role", roleNodes.item(0).getTextContent());
             }
-
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse XML", e);
         }
-
         return result;
     }
-
-
 
     @Bean
     public Function<Product, Product> processProductDetail(){
         return product -> {
-
             System.out.println("Old product: " + product.getCode());
             System.out.println("Old product: " + product.getQty());
-
             // process
             product.setCode("ISTAD-"+product.getCode().toUpperCase());
-
             // Producing
             return product;
         };
     }
-
     @Bean
     public Consumer<Product> processProduct() {
         return product -> {
@@ -130,7 +118,6 @@ public class StreamConfig {
             System.out.println("obj product: " + product.getQty());
         };
     }
-
     // A simple processor: Takes a string, makes it uppercase, and sends it on
     @Bean
     public Consumer<String> processMessage() {
@@ -138,6 +125,4 @@ public class StreamConfig {
             System.out.println("Processing: " + input);
         };
     }
-
-
 }

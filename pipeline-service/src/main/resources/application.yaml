@@ -10,9 +10,15 @@ spring:
 
   cloud:
     function:
-      definition: processProduct;processMessage;processProductDetail;processMessageFromOracle
+      definition: processProduct;processMessage;processProductDetail;processMessageFromOracle;consumeDbzEvent
     stream:
       bindings:
+        consumeDbzEvent-in-0:
+          destination: ITP.CORE_BANKING.RECORD_XML
+          group: record-xml-consumer-group
+        consumeDbzEvent-out-0:
+          destination: cleaned-record-xml
+          content-type: application/json
         processProductDetail-in-0:
           destination: product-detail
           group: monitor-group2
@@ -26,24 +32,30 @@ spring:
         processProductDetail-out-0:
           destination: processed-product-detail
           content-type: application/json
-        processMessageFromOracle-in-0:
-          destination: topic.DEBEZIUMMKR.RECORD_XML
-          group: oracle-monitor-group
-          content-type: application/*+avro
+#        processMessageFromOracle-in-0:
+#          destination: topic.DEBEZIUMMKR.RECORD_XML
+#          group: oracle-monitor-group
+#          content-type: application/*+avro
       kafka:
         binder:
           brokers: localhost:29092,localhost:29094,localhost:29096
           configuration:
             auto.offset.reset: earliest
         bindings:
-          processMessageFromOracle-in-0:
+#          processMessageFromOracle-in-0:
+#            consumer:
+#              configuration:
+#                schema.registry.url: http://localhost:8081
+#                key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+#                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+#                specific.avro.reader: false
+          consumeDbzEvent-in-0:
             consumer:
               configuration:
-                auto.offset.reset: earliest
                 schema.registry.url: http://localhost:8081
                 key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
                 value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-
+                specific.avro.reader: false
   security:
     oauth2:
       resourceserver:
