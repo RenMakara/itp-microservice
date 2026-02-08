@@ -10,9 +10,12 @@ spring:
 
   cloud:
     function:
-      definition: processProduct;processMessage;processProductDetail;processMessageFromOracle;consumeDbzEvent
+      definition: processProduct;processMessage;processProductDetail;processMessageFromOracle;consumeDbzEvent;captureEnvelope
     stream:
       bindings:
+        captureEnvelope-in-0:
+          destination: ITP.CORE_BANKING.RECORD_XML
+          group: envelope-group
         consumeDbzEvent-in-0:
           destination: ITP.CORE_BANKING.RECORD_XML
           group: record-xml-consumer-group
@@ -49,6 +52,13 @@ spring:
 #                key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
 #                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
 #                specific.avro.reader: false
+          captureEnvelope-in-0:
+            consumer:
+              configuration:
+                schema.registry.url: http://localhost:8081
+                key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                specific.avro.reader: true
           consumeDbzEvent-in-0:
             consumer:
               configuration:
